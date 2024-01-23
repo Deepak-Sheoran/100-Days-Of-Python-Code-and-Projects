@@ -3,7 +3,7 @@
 Welcome to my 100 Days of Code Challenge! This repository is a collection of 100 coding projects created while following the Udemy course "100 Days of Code." The challenge is a commitment to consistent coding practice, skill-building, and daily learning.
 
 ## Course Details
-- **Course:** [100 Days of Code](#) on Udemy
+- **Course:** [100 Days of Code](#https://www.udemy.com/course/100-days-of-code/learn/) on Udemy
 - **Goal:** Complete 100 coding projects in 100 days
 - **Progress:** Ongoing
 
