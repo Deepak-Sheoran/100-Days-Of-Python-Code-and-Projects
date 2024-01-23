@@ -17,6 +17,6 @@ Feel free to explore the projects, provide feedback, or use them as inspiration 
 If you'd like to join the 100 Days of Code Challenge, create your own branch, and start coding! Share your progress, challenges, and successes. Let's support each other in this coding marathon.
 
 ## Connect
-Connect with me on [Twitter](#) and share your coding journey! Let's inspire and motivate each other to reach new heights in our coding skills.
+Connect with me on [Linkedin](https://www.linkedin.com/in/deepak--sheoran) and share your coding journey! Let's inspire and motivate each other to reach new heights in our coding skills.
 
 Happy coding! 🚀💻🌟
