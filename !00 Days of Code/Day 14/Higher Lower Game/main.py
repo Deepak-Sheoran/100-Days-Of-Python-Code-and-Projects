@@ -30,11 +30,8 @@ def game():
         if question in ['A', 'B']:
             if question == who_has_more:
                 score += 1
-                if who_has_more == 'A':
-                    data_b = choice(game_data)
-                else:
-                    data_a = data_b
-                    data_b = choice(game_data)
+                data_a = data_b
+                data_b = choice(game_data)
             else:
                 wrong = True
                 data_b = choice(game_data)
