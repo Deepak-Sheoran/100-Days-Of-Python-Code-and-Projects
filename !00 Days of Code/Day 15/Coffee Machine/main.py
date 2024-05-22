@@ -104,6 +104,7 @@ def coffee_machine():
             # reason for the failed transaction is being returned
             if isinstance(output, str):
                 print(output)
+                input()
             else:
                 money_required = output[1]
                 print(output[0])
@@ -120,6 +121,7 @@ def coffee_machine():
             print(f"Total Money Given = ${given_money}")
             if money_required <= given_money:
                 print(f"Here is your change = ${round(given_money - money_required, 2)}")
+                print(f"Here is your {choice} Enjoy!")
                 transaction_successful = True
             else:
                 print(f"Transaction Failed!\nInsufficient money given. "
