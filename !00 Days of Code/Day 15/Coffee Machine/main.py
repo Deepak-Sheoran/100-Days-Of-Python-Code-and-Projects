@@ -100,18 +100,16 @@ def coffee_machine():
         print(f"Total Money Given = ${given_money}")
         if required_money <= given_money:
             print(f"Here is your change = ${round(given_money - money_required, 2)}")
-            print(f"Here is your {choice} Enjoy!")
+            print(f"Here is your {choice}🍵 Enjoy!")
             input()
-            return True
+            update_resources(choice)
         else:
             print(f"Transaction Failed!\nInsufficient money given. "
                   f"You came sort by ${round(money_required - given_money, 2)}"
                   "\nMoney Refunded")
-            return False
 
     while True:
         enough_resources = False
-        transaction_successful = False
         money_required = 0
         system('cls')
         print(logo)
@@ -134,12 +132,9 @@ def coffee_machine():
             continue  # continue statement make the loop go back to the beginning of the loop
 
         if enough_resources:
-            transaction_successful = process_coins(money_required)
+            process_coins(money_required)
         else:
             pass
-
-        if transaction_successful:
-            update_resources(choice)
 
 
 coffee_machine()
