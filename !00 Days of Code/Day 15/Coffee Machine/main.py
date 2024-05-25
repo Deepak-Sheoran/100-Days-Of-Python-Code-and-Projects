@@ -12,18 +12,18 @@ from os import system
 # TODO 2. create various variables that will keep records like initial resources available, currency and their value
 starting_resources = {"water": 300, "coffee": 100, "milk": 200, "money": 10}
 currency = {"quarter": 0.25, "dime": 0.10, "nickle": 0.05, "pennie": 0.01}
+required_resources = \
+    {
+        'espresso': {'water': 50, 'coffee': 18, 'milk': 0, 'money': 1.50},
+        'latte': {'water': 200, 'coffee': 24, 'milk': 150, 'money': 2.50},
+        'cappuccino': {'water': 250, 'coffee': 24, 'milk': 100, 'money': 3.00}
+    }
 
 
 # TODO 3. Create a function that will be run to start the coffee machine
 def coffee_machine():
     # since the values in resources can change but the starting resources will remain the same
     resources = starting_resources
-    required_resources = \
-        {
-            'espresso': {'water': 50, 'coffee': 18, 'milk': 0, 'money': 1.50},
-            'latte': {'water': 200, 'coffee': 24, 'milk': 150, 'money': 2.50},
-            'cappuccino': {'water': 250, 'coffee': 24, 'milk': 100, 'money': 3.00}
-        }
 
     #  TODO 4. Within the function create various local function that will either return formatted strings, change
     #   the data stored in the global variables, print report that will make the master of the coffee machine
@@ -39,27 +39,38 @@ def coffee_machine():
         """
         nonlocal enough_resources  # need to use nonlocal since we might need to change its value depending on the
         # situation
-        insufficient_ingredient = []
+        insufficient_ingredient = []  # This variable checks if there are any resources that are lacking while preparing
+        # the order
         for ingredient in resources:
             if ingredient == 'money':
-                if len(insufficient_ingredient) == 0:
-                    enough_resources = True
-                    return required_resources[drink][ingredient]
+                pass
             elif required_resources[drink][ingredient] > resources[ingredient]:
                 insufficient_ingredient.append(ingredient)
                 enough_resources = False
+        if len(insufficient_ingredient) == 0:
+            enough_resources = True
+            return required_resources[drink]['money']
         return insufficient_ingredient
 
     def player_choice(option):
         if option == 'report':
             return (f"Available resources:-\nWater: {resources['water']}ml\nMilk: {resources['milk']}ml"
                     f"\nCoffee: {resources['coffee']}g\nMoney: ${resources['money']}")
+        if option == 'add resource':
+            new_resources = {}
+            print("You have chosen to add resource to the machine. Please enter how much you want added or removed:")
+            for kind_of_resource in resources:
+                new_resources[kind_of_resource] = int(input(f"How much {kind_of_resource}: "))
+            update_resources(None, new_resources)
+            return "Resources successfully added!"
         if option in ['espresso', 'latte', 'cappuccino']:
             money = requirements(option)
             if isinstance(money, list):
                 return f"There is not enough {', '.join(money)} in the coffee machine to prepare your order."
             else:
-                return [f"Your bill for the order of {option} is ${money}.", money]
+                return [f"Your bill for the order of {option} is ${money}.", money]  # The function returns a list when
+                # there are enough resources available to prepare the drink. It sends the money that will be required
+                # for the order.
 
     def update_resources(drink=None, added_resources=None):
         """
@@ -79,6 +90,25 @@ def coffee_machine():
             for type_of_resource in added_resources:
                 resources[type_of_resource] += added_resources[type_of_resource]
 
+    def process_coins(required_money):
+        print("This machine is coin operated.")
+        given_money = 0
+        for type_of_coin in currency:
+            no_of_coins = int(input(f"How many {type_of_coin}s?: "))
+            given_money += no_of_coins * currency[type_of_coin]
+        given_money = round(given_money, 2)
+        print(f"Total Money Given = ${given_money}")
+        if required_money <= given_money:
+            print(f"Here is your change = ${round(given_money - money_required, 2)}")
+            print(f"Here is your {choice} Enjoy!")
+            input()
+            return True
+        else:
+            print(f"Transaction Failed!\nInsufficient money given. "
+                  f"You came sort by ${round(money_required - given_money, 2)}"
+                  "\nMoney Refunded")
+            return False
+
     while True:
         enough_resources = False
         transaction_successful = False
@@ -91,14 +121,7 @@ def coffee_machine():
         if choice == 'terminate':
             return
 
-        if choice == "add resource":
-            new_resources = {}
-            print("You have chosen to add resource to the machine. Please enter how much you added or removed:")
-            for kind_of_resource in resources:
-                new_resources[kind_of_resource] = int(input(f"How much {kind_of_resource}"))
-            update_resources(None, new_resources)
-
-        if choice in ['report', 'espresso', 'latte', 'cappuccino']:
+        if choice in ['report', 'espresso', 'latte', 'cappuccino', 'add resource']:
             output = player_choice(choice)
             # if player_choice function returns only a string, that means for some reason the transaction failed and the
             # reason for the failed transaction is being returned
@@ -108,25 +131,10 @@ def coffee_machine():
                 money_required = output[1]
                 print(output[0])
         else:
-            continue
+            continue  # continue statement make the loop go back to the beginning of the loop
 
         if enough_resources:
-            print("This machine is coin operated.")
-            given_money = 0
-            for type_of_coin in currency:
-                no_of_coins = int(input(f"How many {type_of_coin}s?: "))
-                given_money += no_of_coins * currency[type_of_coin]
-            given_money = round(given_money, 2)
-            print(f"Total Money Given = ${given_money}")
-            if money_required <= given_money:
-                print(f"Here is your change = ${round(given_money - money_required, 2)}")
-                print(f"Here is your {choice} Enjoy!")
-                transaction_successful = True
-                input()
-            else:
-                print(f"Transaction Failed!\nInsufficient money given. "
-                      f"You came sort by ${round(money_required - given_money, 2)}"
-                      "\nMoney Refunded")
+            transaction_successful = process_coins(money_required)
         else:
             pass
 
