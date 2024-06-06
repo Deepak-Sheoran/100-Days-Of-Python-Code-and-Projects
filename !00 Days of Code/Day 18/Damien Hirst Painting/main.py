@@ -6,19 +6,17 @@ canvas = Screen()
 canvas.title("Damien Hirst Painting")
 painter = Turtle()
 print(painter.pos())
-painter.shape("circle")
-painter.pensize(20)
 painter.speed("fastest")
+painter.hideturtle()
 colormode(255)
+painter.penup()
 
 colors = colorgram.extract("spot painting.jpeg", 20)
 
 
-for i in range(-300, 320, 50):
-    for j in range(-360, 390, 50):
-        painter.penup()
-        painter.goto(j, i)
-        painter.color(choice(colors).rgb)
-        painter.stamp()
-        painter.pendown()
+for i in range(-300, 350, 50):
+    painter.goto(-350, i)
+    for j in range(1, 16):
+        painter.dot(20, choice(colors).rgb)
+        painter.forward(50)
 canvas.exitonclick()
