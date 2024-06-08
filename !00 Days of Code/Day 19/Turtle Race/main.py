@@ -62,7 +62,7 @@ def race():
         for r in racers:
             r.forward(randint(1, 10))
             if r.xcor() > 340:
-                result = r.color()[0]
+                result = r.pencolor()
                 print(f"The turtle with the {result} color wins the race")
                 return result
 
