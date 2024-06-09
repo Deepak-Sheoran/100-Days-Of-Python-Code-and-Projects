@@ -2,7 +2,8 @@ from turtle import Turtle, Screen
 from random import randint
 
 field = Screen()
-field.bgcolor("cyan")
+field.tracer(5)
+field.bgpic("download.png")
 field.title("Race Between Turtles")
 painter = Turtle()
 painter.pensize(2)
@@ -54,7 +55,8 @@ for racer in racers:
     racer.goto(-370, y_cor)
     y_cor += 40
 
-guessed_winner = field.textinput("Time To Guess", "Enter the color of the turtle that you think will win _ ")
+field.tracer(1)
+guessed_winner = field.textinput("Time To Guess", "Enter the color of the turtle that you think will win.")
 
 
 def race():
