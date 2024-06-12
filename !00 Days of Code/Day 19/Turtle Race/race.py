@@ -84,4 +84,5 @@ class Race:
                 if r.xcor() > 340:
                     self.who_won = r.pencolor()
                     print(f"The turtle with the {self.who_won} color wins the race")
-                    self.field.exitonclick()
+                    self.field.clearscreen()
+                    return
